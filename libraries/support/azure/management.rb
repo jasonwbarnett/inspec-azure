@@ -321,9 +321,9 @@ module Azure
       )
     end
 
-    def management_group(management_group_id, expand: false, recurse: false, filter: nil)
+    def management_group(group_id, expand: false, recurse: false, filter: nil)
       get_properties = {
-        url: "/providers/Microsoft.Management/managementGroups/#{management_group_id}",
+        url: "/providers/Microsoft.Management/managementGroups/#{group_id}",
         api_version: '2018-03-01-preview',
         expand: expand,
         recurse: recurse,
