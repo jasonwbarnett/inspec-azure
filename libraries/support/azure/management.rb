@@ -331,7 +331,7 @@ module Azure
       get(
         url: "/providers/Microsoft.Management/managementGroups/#{group_id}",
         api_version: '2018-03-01-preview',
-        **params
+        params: params,
       )
     end
 
