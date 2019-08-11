@@ -321,6 +321,13 @@ module Azure
       )
     end
 
+    def management_group(management_group_id, expand: false, recurse: false, filter: nil)
+      get(
+        url: "/providers/Microsoft.Management/managementGroups/#{management_group_id}",
+        api_version: '2018-03-01-preview',
+      )
+    end
+
     private
 
     def rest_client
