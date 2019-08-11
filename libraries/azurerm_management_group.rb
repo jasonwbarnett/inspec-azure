@@ -11,68 +11,46 @@ class AzurermManagementGroup < AzurermSingularResource
     end
   EXAMPLE
 
-  ATTRS = %i(
-    id
-    name
-    location
-    properties
-    resources
-    tags
-    type
-    zones
-  ).freeze
+  ATTRS = {
+    children:     :children,
+    details:      :details,
+    type:         :type,
+    display_name: :displayName,
+    id:           :id,
+    name:         :name,
+    roles:        :roles,
+    tenant_id:    :tenantId,
+    type:         :type,
+  }
 
-  attr_reader(*ATTRS)
+  attr_reader(*ATTRS.keys)
 
   def initialize(resource_group: nil, name: nil)
     resp = management.management_group(resource_group, name)
     return if has_error?(resp)
 
-    assign_fields(ATTRS, resp)
+    assign_fields_with_map(ATTRS, resp.properties)
 
     @exists = true
   end
 
   def to_s
-    "'#{name}' Virtual Machine"
+    "'#{name}' Management Group"
   end
 
-  def installed_extensions_types
-    @installed_extensions_types ||= Array(resources).map do |extension|
-      extension.properties.type
-    end
+  def parent_name
+    properties.details.parent.name
   end
 
-  def has_only_approved_extensions?(approved_extensions)
-    (installed_extensions_types - approved_extensions).empty?
+  def parent_id
+    properties.details.parent.id
   end
 
-  def has_endpoint_protection_installed?(endpoint_protection_extensions)
-    installed_extensions_types.any? { |extension| endpoint_protection_extensions.include?(extension) }
+  def parent_display_name
+    properties.details.parent.displayName
   end
 
-  def installed_extensions_names
-    @installed_extensions_names ||= Array(resources).map do |extension|
-      extension['name']
-    end
-  end
-
-  def has_monitoring_agent_installed?
-    return false unless properties.osProfile.key?(:windowsConfiguration)
-
-    Array(resources).any? do |extension|
-      status = extension.properties.provisioningState
-      type   = extension.properties.type
-
-      type == 'MicrosoftMonitoringAgent' && status == 'Succeeded'
-    end
-  end
-
-  def os_disk_name
-    properties.storageProfile.osDisk.name
-  end
-
-  def data_disk_names
-    Array(properties.storageProfile.dataDisks).map(&:name)
+  def children_names
+    Array(properties.children).map(&:name)
   end
 end
