@@ -6,8 +6,8 @@ class AzurermManagementGroup < AzurermSingularResource
   name 'azurerm_management_group'
   desc 'Verifies settings for an Azure Management Group'
   example <<-EXAMPLE
-    describe azurerm_management_group(resource_group: 'example', name: 'vm-name') do
-      it { should have_monitoring_agent_installed }
+    describe azurerm_management_group(name: 'group-name') do
+      it { should exist }
     end
   EXAMPLE
 
