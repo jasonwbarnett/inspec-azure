@@ -322,16 +322,17 @@ module Azure
     end
 
     def management_group(group_id, expand: false, recurse: false, filter: nil)
-      get_properties = {
-        url: "/providers/Microsoft.Management/managementGroups/#{group_id}",
-        api_version: '2018-03-01-preview',
+      params = {
         expand: expand,
         recurse: recurse,
       }
+      params.merge!(filter: filter) if filter
 
-      get_properties.merge!(filter: filter) if filter
-
-      get(get_properties)
+      get(
+        url: "/providers/Microsoft.Management/managementGroups/#{group_id}",
+        api_version: '2018-03-01-preview',
+        **params
+      )
     end
 
     private
