@@ -24,8 +24,8 @@ class AzurermManagementGroup < AzurermSingularResource
 
   attr_reader(*ATTRS.keys)
 
-  def initialize(resource_group: nil, name: nil)
-    resp = management.management_group(resource_group, name)
+  def initialize(group_id:, expand: false, recurse: false, filter: nil)
+    resp = management.management_group(group_id, expand: expand, filter: filter)
     return if has_error?(resp)
 
     assign_fields_with_map(ATTRS, resp.properties)
