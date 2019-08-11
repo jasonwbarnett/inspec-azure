@@ -14,14 +14,13 @@ class AzurermManagementGroup < AzurermSingularResource
   ATTRS = {
     children:     :children,
     details:      :details,
-    type:         :type,
     display_name: :displayName,
     id:           :id,
     name:         :name,
     roles:        :roles,
     tenant_id:    :tenantId,
     type:         :type,
-  }
+  }.freeze
 
   attr_reader(*ATTRS.keys)
 
