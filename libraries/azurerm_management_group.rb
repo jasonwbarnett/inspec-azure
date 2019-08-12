@@ -11,24 +11,33 @@ class AzurermManagementGroup < AzurermSingularResource
     end
   EXAMPLE
 
-  ATTRS = {
+  ATTRS = [
+    :id,
+    :type,
+    :name,
+    :properties,
+  ].freeze
+
+  PROPERTY_ATTRS = {
     children:     :children,
     details:      :details,
     display_name: :displayName,
-    id:           :id,
-    name:         :name,
     roles:        :roles,
     tenant_id:    :tenantId,
-    type:         :type,
   }.freeze
 
-  attr_reader(*ATTRS.keys)
+  attr_reader(*ATTRS, *PROPERTY_ATTRS.keys)
 
   def initialize(group_id:, expand: false, recurse: false, filter: nil)
     resp = management.management_group(group_id, expand: expand, recurse: recurse, filter: filter)
     return if has_error?(resp)
 
-    assign_fields_with_map(ATTRS, resp.properties)
+    @id = resp.id
+    @type = resp.type
+    @name = resp.name
+    @properties = resp.properties
+
+    assign_fields_with_map(PROPERTY_ATTRS, resp.properties)
 
     @exists = true
   end
