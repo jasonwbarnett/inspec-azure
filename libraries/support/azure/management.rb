@@ -321,6 +321,13 @@ module Azure
       )
     end
 
+    def management_groups
+      get(
+        url: "/providers/Microsoft.Management/managementGroups",
+        api_version: '2018-03-01-preview',
+      )
+    end
+
     def management_group(group_id, expand: false, recurse: false, filter: nil)
       params = {
         expand: expand,
