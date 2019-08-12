@@ -34,7 +34,7 @@ class AzurermManagementGroup < AzurermSingularResource
     @id = resp.id
     @type = resp.type
     @name = resp.name
-    @parent = resp.details.parent
+    @parent = resp.properties.details.parent
 
     assign_fields_with_map(PROPERTY_ATTRS, resp.properties)
 
