@@ -6,7 +6,7 @@ class AzurermManagementGroup < AzurermSingularResource
   name 'azurerm_management_group'
   desc 'Verifies settings for an Azure Management Group'
   example <<-EXAMPLE
-    describe azurerm_management_group(name: 'group-name') do
+    describe azurerm_management_group(group_id: 'example-group') do
       it { should exist }
     end
   EXAMPLE
