@@ -15,11 +15,11 @@ class AzurermManagementGroup < AzurermSingularResource
     :id,
     :type,
     :name,
+    :parent,
   ].freeze
 
   PROPERTY_ATTRS = {
     children:     :children,
-    details:      :details,
     display_name: :displayName,
     roles:        :roles,
     tenant_id:    :tenantId,
@@ -34,6 +34,7 @@ class AzurermManagementGroup < AzurermSingularResource
     @id = resp.id
     @type = resp.type
     @name = resp.name
+    @parent = resp.details.parent
 
     assign_fields_with_map(PROPERTY_ATTRS, resp.properties)
 
@@ -45,18 +46,18 @@ class AzurermManagementGroup < AzurermSingularResource
   end
 
   def parent_name
-    details.parent.name
+    parent.name
   end
 
   def parent_id
-    details.parent.id
+    parent.id
   end
 
   def parent_display_name
-    details.parent.displayName
+    parent.displayName
   end
 
   def children_names
-    Array(properties.children).map(&:name)
+    Array(children).map(&:name)
   end
 end
