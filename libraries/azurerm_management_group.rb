@@ -60,4 +60,8 @@ class AzurermManagementGroup < AzurermSingularResource
   def children_names
     Array(children).map(&:name)
   end
+
+  def children_display_names
+    Array(children).map(&:displayName)
+  end
 end
