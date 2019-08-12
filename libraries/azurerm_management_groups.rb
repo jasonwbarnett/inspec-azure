@@ -7,7 +7,7 @@ class AzurermManagementGroups < AzurermPluralResource
   desc 'Verifies settings for an Azure Management Groups'
   example <<-EXAMPLE
     describe azurerm_management_groups do
-      it { should exist }
+      its('groups_names') { should include 'example-group' }
     end
   EXAMPLE
 
@@ -21,8 +21,7 @@ class AzurermManagementGroups < AzurermPluralResource
     resp = management.management_groups
     return if has_error?(resp)
 
-    @groups = resp.value
-    @exists = true
+    @groups = resp
   end
 
   def to_s
