@@ -1,5 +1,5 @@
 control 'azurerm_management_group' do
-  describe azurerm_management_group(group_id: 'my-first-management-group') do
+  describe azurerm_management_group(group_id: 'my-first-management-group', expand: true, recurse: true) do
     it                       { should exist }
     its('display_name')      { should eq 'my fist management group (name)' }
     its('id')                { should eq '/providers/Microsoft.Management/managementGroups/my-first-management-group' }
