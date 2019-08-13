@@ -1,5 +1,5 @@
 control 'azurerm_management_group' do
-  describe azurerm_management_group(group_id: 'my-first-management-group', expand: true, recurse: true) do
+  describe azurerm_management_group(group_id: 'my-first-management-group', expand: 'children', recurse: true) do
     it                            { should exist }
     its('id')                     { should eq '/providers/Microsoft.Management/managementGroups/my-first-management-group' }
     its('type')                   { should eq '/providers/Microsoft.Management/managementGroups' }

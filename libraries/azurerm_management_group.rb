@@ -27,7 +27,7 @@ class AzurermManagementGroup < AzurermSingularResource
 
   attr_reader(*ATTRS, *PROPERTY_ATTRS.keys)
 
-  def initialize(group_id:, expand: false, recurse: false, filter: nil)
+  def initialize(group_id:, expand: nil, recurse: false, filter: nil)
     resp = management.management_group(group_id, expand: expand, recurse: recurse, filter: filter)
     return if has_error?(resp)
 

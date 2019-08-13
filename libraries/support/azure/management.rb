@@ -328,12 +328,12 @@ module Azure
       )
     end
 
-    def management_group(group_id, expand: false, recurse: false, filter: nil)
+    def management_group(group_id, expand: nil, recurse: false, filter: nil)
       params = {
-        expand: expand,
-        recurse: recurse,
+        "$recurse" => recurse,
       }
-      params.merge!(filter: filter) if filter
+      params.merge!("$expand" => expand) if expand
+      params.merge!("$filter" => filter) if filter
 
       get(
         url: "/providers/Microsoft.Management/managementGroups/#{group_id}",
