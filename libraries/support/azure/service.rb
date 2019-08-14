@@ -84,7 +84,7 @@ module Azure
       self
     end
 
-    def get(url:, api_version:, error_handler: nil, unwrap: nil, use_cache: true, params: {})
+    def get(url:, api_version:, error_handler: nil, unwrap: nil, use_cache: true, params: {}) # rubocop:disable Metrics/ParameterLists
       confirm_configured!
 
       body = cache.fetch(url) if use_cache
