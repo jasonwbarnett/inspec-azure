@@ -16,6 +16,15 @@ provider "random" {
   version = "~> 1.2"
 }
 
+resource "azurerm_management_group" "mg_parent" {
+  display_name = "ParentGroup"
+}
+
+resource "azurerm_management_group" "mg_child" {
+  display_name               = "ChildGroup"
+  parent_management_group_id = "${azurerm_management_group.mg_parent.id}"
+}
+
 resource "random_string" "password" {
   length = 16
   upper = true
