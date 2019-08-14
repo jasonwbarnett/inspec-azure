@@ -17,11 +17,19 @@ provider "random" {
 }
 
 resource "azurerm_management_group" "mg_parent" {
-  display_name = "ParentGroup"
+  group_id = "mg_parent"
+  display_name = "Management Group Parent"
 }
 
-resource "azurerm_management_group" "mg_child" {
-  display_name               = "ChildGroup"
+resource "azurerm_management_group" "mg_child_one" {
+  group_id = "mg_child_one"
+  display_name = "Management Group Child 1"
+  parent_management_group_id = "${azurerm_management_group.mg_parent.id}"
+}
+
+resource "azurerm_management_group" "mg_child_two" {
+  group_id = "mg_child_two"
+  display_name = "Management Group Child 2"
   parent_management_group_id = "${azurerm_management_group.mg_parent.id}"
 }
 
