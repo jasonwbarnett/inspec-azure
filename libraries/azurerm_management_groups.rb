@@ -25,7 +25,7 @@ class AzurermManagementGroups < AzurermPluralResource
   end
 
   def to_s
-    "Management Groups"
+    'Management Groups'
   end
 
   def group_ids
